@@ -11,6 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
+import com.crashlytics.android.answers.CustomEvent;
 import com.google.firebase.auth.FirebaseAuth;
 import com.apptonic.lalitsonawane.cdbuddycommunity.fragment.MyPostsFragment;
 import com.apptonic.lalitsonawane.cdbuddycommunity.fragment.MyTopPostsFragment;
@@ -20,6 +23,8 @@ import com.apptonic.lalitsonawane.cdbuddycommunity.fragment.RecentPostsFragment;
 
 public class  MainActivity extends BaseActivity {
 
+
+
     private static final String TAG = "MainActivity";
 
     private FragmentPagerAdapter mPagerAdapter;
@@ -27,8 +32,19 @@ public class  MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        // TODO: Use your own attributes to track content views in your app
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Tweet")
+                .putContentType("Video")
+                .putContentId("1234")
+                .putCustomAttribute("Favorites Count", 20)
+                .putCustomAttribute("Screen Orientation", "Landscape"));
+
 
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -69,6 +85,16 @@ public class  MainActivity extends BaseActivity {
             }
         });
     }
+
+    // TODO: Move this method and use your own event name to track your key metrics
+    public void onKeyMetric() {
+        // TODO: Use your own string attributes to track common values over time
+        // TODO: Use your own number attributes to track median value over time
+        Answers.getInstance().logCustom(new CustomEvent("Video Played")
+                .putCustomAttribute("Category", "Comedy")
+                .putCustomAttribute("Length", 350));
+    }
+
 
 
 
