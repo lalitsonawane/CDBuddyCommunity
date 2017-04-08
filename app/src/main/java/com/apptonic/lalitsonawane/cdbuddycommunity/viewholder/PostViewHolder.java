@@ -10,6 +10,8 @@ import com.apptonic.lalitsonawane.cdbuddycommunity.models.Post;
 
 public class PostViewHolder extends RecyclerView.ViewHolder {
 
+
+
     public TextView titleView;
     public TextView authorView;
     public ImageView starView;
